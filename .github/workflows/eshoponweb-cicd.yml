@@ -2,21 +2,18 @@ name: eShopOnWeb Build and Test
 
 #Triggers (uncomment line below to use it)
 on: [push, workflow_dispatch]
-
-#Environment variables https://docs.github.com/en/actions/learn-github-actions/environment-variables
-env:
-  RESOURCE-GROUP: rg-eshoponweb_g18
-  LOCATION: Germany West Central
-  TEMPLATE-FILE: infra/webapp.bicep
-  SUBSCRIPTION-ID: 756b730f-461a-4a68-b257-fa3d03b47090
-  WEBAPP-NAME: eshoponweb-webapp-g18
-
-
 jobs:
   #Build, test and publish .net web project in repository
   buildandtest:
     runs-on: ubuntu-latest
     steps:
+    - name: Login to Azure
+      uses: azure/login@v2
+      with:
+        client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_46d05296-2fc7-4d7b-a3fb-6fac4bae1653 }}
+        tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_f7e62de1-8130-4847-a7ed-1eecab6d25af }}
+        subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_756b730f-461a-4a68-b257-fa3d03b47090 }}
+        
     #checkout the repository
     - uses: actions/checkout@v4
     #prepare runner for desired .net version SDK
